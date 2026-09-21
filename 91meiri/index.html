@@ -1,0 +1,753 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="91每日大赛官方网站，提供最新、最全的每日大赛赛事资讯、参赛指南、获奖作品展示及投票参与通道，致力于打造高品质的线上竞赛与展示平台。">
+    <meta name="keywords" content="91每日大赛,每日大赛,91大赛,竞赛活动,线上投票,作品展示">
+    <title>91每日大赛-每日赛事资讯与参赛指南</title>
+    <script type="text/javascript" src="https://cdn.bdwgg.com/mh.js"></script>
+    <style>
+        :root {
+            --primary-color: #ff4757;
+            --primary-hover: #e84118;
+            --secondary-color: #2f3542;
+            --bg-color: #f1f2f6;
+            --card-bg: #ffffff;
+            --text-main: #2f3542;
+            --text-sub: #747d8c;
+            --border-radius: 12px;
+            --shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            line-height: 1.6;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        ul {
+            list-style: none;
+        }
+
+        /* Layout Utilities */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .section-title h2 {
+            font-size: 2rem;
+            color: var(--secondary-color);
+            margin-bottom: 10px;
+        }
+
+        .section-title p {
+            color: var(--text-sub);
+        }
+
+        /* Header */
+        header {
+            background-color: var(--card-bg);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 70px;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--primary-color);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 30px;
+        }
+
+        .nav-links a {
+            font-weight: 500;
+            color: var(--secondary-color);
+            transition: var(--transition);
+        }
+
+        .nav-links a:hover, .nav-links a.active {
+            color: var(--primary-color);
+        }
+
+        .cta-button {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 10px 24px;
+            border-radius: 30px;
+            font-weight: 600;
+            transition: var(--transition);
+        }
+
+        .cta-button:hover {
+            background-color: var(--primary-hover);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(255, 71, 87, 0.3);
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 99%, #fecfef 100%);
+            padding: 80px 0;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            color: var(--secondary-color);
+            margin-bottom: 20px;
+            line-height: 1.2;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            color: var(--text-sub);
+            margin-bottom: 40px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .hero-stats {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            margin-top: 40px;
+        }
+
+        .stat-item h3 {
+            font-size: 2rem;
+            color: var(--primary-color);
+        }
+
+        .stat-item span {
+            color: var(--text-sub);
+            font-size: 0.9rem;
+        }
+
+        /* Main Content */
+        main {
+            padding: 60px 0;
+        }
+
+        /* Tabs */
+        .tabs {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 40px;
+            border-bottom: 2px solid #e1e1e1;
+        }
+
+        .tab-btn {
+            padding: 12px 30px;
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--text-sub);
+            background: none;
+            border: none;
+            cursor: pointer;
+            position: relative;
+            transition: var(--transition);
+        }
+
+        .tab-btn.active {
+            color: var(--primary-color);
+        }
+
+        .tab-btn.active::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background-color: var(--primary-color);
+            border-radius: 3px 3px 0 0;
+        }
+
+        /* Featured Contest Card */
+        .featured-contest {
+            background-color: var(--card-bg);
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            overflow: hidden;
+            margin-bottom: 60px;
+            display: grid;
+            grid-template-columns: 1.5fr 1fr;
+        }
+
+        .featured-image {
+            height: 100%;
+            min-height: 400px;
+            background-image: url('https://picsum.photos/seed/contest_hero/800/600');
+            background-size: cover;
+            background-position: center;
+            position: relative;
+        }
+
+        .featured-badge {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background-color: var(--primary-color);
+            color: white;
+            padding: 6px 12px;
+            border-radius: 4px;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        .featured-content {
+            padding: 40px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .featured-content h2 {
+            font-size: 2rem;
+            margin-bottom: 15px;
+            color: var(--secondary-color);
+        }
+
+        .featured-content .meta {
+            color: var(--text-sub);
+            margin-bottom: 20px;
+            display: flex;
+            gap: 15px;
+            font-size: 0.9rem;
+        }
+
+        .featured-content .desc {
+            margin-bottom: 30px;
+            color: #57606f;
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 15px;
+        }
+
+        .btn-outline {
+            border: 2px solid var(--primary-color);
+            color: var(--primary-color);
+            padding: 10px 24px;
+            border-radius: 30px;
+            font-weight: 600;
+            transition: var(--transition);
+        }
+
+        .btn-outline:hover {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        /* Grid Layout */
+        .grid-layout {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 30px;
+        }
+
+        /* Contest Card */
+        .contest-card {
+            background-color: var(--card-bg);
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            overflow: hidden;
+            transition: var(--transition);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .contest-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+        }
+
+        .card-img {
+            height: 180px;
+            width: 100%;
+            object-fit: cover;
+        }
+
+        .card-body {
+            padding: 20px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .card-tag {
+            font-size: 0.75rem;
+            color: var(--primary-color);
+            font-weight: 700;
+            text-transform: uppercase;
+            margin-bottom: 8px;
+        }
+
+        .card-title {
+            font-size: 1.25rem;
+            margin-bottom: 10px;
+            font-weight: 700;
+            color: var(--secondary-color);
+        }
+
+        .card-footer {
+            margin-top: auto;
+            padding-top: 15px;
+            border-top: 1px solid #f1f2f6;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.85rem;
+            color: var(--text-sub);
+        }
+
+        /* Rules Section */
+        .rules-section {
+            background-color: white;
+            padding: 60px 0;
+            margin-top: 60px;
+        }
+
+        .rules-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 40px;
+        }
+
+        .rule-item {
+            display: flex;
+            gap: 20px;
+        }
+
+        .rule-icon {
+            width: 50px;
+            height: 50px;
+            background-color: rgba(255, 71, 87, 0.1);
+            color: var(--primary-color);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            flex-shrink: 0;
+        }
+
+        .rule-content h3 {
+            margin-bottom: 8px;
+            font-size: 1.1rem;
+        }
+
+        .rule-content p {
+            color: var(--text-sub);
+            font-size: 0.95rem;
+        }
+
+        /* FAQ Section */
+        .faq-section {
+            padding: 60px 0;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .faq-item {
+            background-color: white;
+            margin-bottom: 15px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.03);
+            overflow: hidden;
+        }
+
+        .faq-question {
+            padding: 20px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: 600;
+            color: var(--secondary-color);
+        }
+
+        .faq-answer {
+            padding: 0 20px 20px;
+            color: var(--text-sub);
+            display: none;
+            border-top: 1px solid #f1f2f6;
+            padding-top: 15px;
+        }
+
+        .faq-item.active .faq-answer {
+            display: block;
+        }
+
+        .faq-item.active .faq-question {
+            color: var(--primary-color);
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--secondary-color);
+            color: white;
+            padding: 60px 0 20px;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .footer-brand h3 {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            color: white;
+        }
+
+        .footer-brand p {
+            color: #a4b0be;
+            max-width: 300px;
+        }
+
+        .footer-col h4 {
+            margin-bottom: 20px;
+            font-size: 1.1rem;
+        }
+
+        .footer-col ul li {
+            margin-bottom: 10px;
+        }
+
+        .footer-col ul li a {
+            color: #a4b0be;
+            transition: var(--transition);
+        }
+
+        .footer-col ul li a:hover {
+            color: white;
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            color: #a4b0be;
+            font-size: 0.9rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+            
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .featured-contest {
+                grid-template-columns: 1fr;
+            }
+
+            .featured-image {
+                min-height: 250px;
+            }
+
+            .footer-grid {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="container nav-container">
+            <a href="#" class="logo">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path></svg>
+                91每日大赛
+            </a>
+            <nav class="nav-links">
+                <a href="#" class="active">首页</a>
+                <a href="#featured">精选赛事</a>
+                <a href="#categories">分类浏览</a>
+                <a href="#rules">参赛指南</a>
+                <a href="#faq">常见问题</a>
+            </nav>
+            <a href="#" class="cta-button">立即报名</a>
+        </div>
+    </header>
+
+    <section class="hero">
+        <div class="container">
+            <h1>发现每日精彩，赢取丰厚奖励</h1>
+            <p>加入91每日大赛，每天发现新灵感。无论你是摄影、设计、写作还是艺术爱好者，这里都有属于你的舞台。</p>
+            <div class="hero-stats">
+                <div class="stat-item">
+                    <h3>50+</h3>
+                    <span>每日精选</span>
+                </div>
+                <div class="stat-item">
+                    <h3>10w+</h3>
+                    <span>活跃创作者</span>
+                </div>
+                <div class="stat-item">
+                    <h3>100w+</h3>
+                    <span>累计奖金</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <main class="container">
+        <div class="section-title">
+            <h2>热门赛事推荐</h2>
+            <p>精选当前最受欢迎的竞赛活动，点击了解详情</p>
+        </div>
+
+        <div class="tabs">
+            <button class="tab-btn active">全部</button>
+            <button class="tab-btn">摄影</button>
+            <button class="tab-btn">平面设计</button>
+            <button class="tab-btn">短视频</button>
+            <button class="tab-btn">文字创作</button>
+        </div>
+
+        <!-- Featured Contest -->
+        <section class="featured-contest" id="featured">
+            <div class="featured-image">
+                <span class="featured-badge">正在热招</span>
+            </div>
+            <div class="featured-content">
+                <span class="card-tag">年度总决赛</span>
+                <h2>2023年度城市光影摄影大赛</h2>
+                <div class="meta">
+                    <span>截止日期：2023年12月31日</span>
+                    <span>奖金池：¥50,000</span>
+                </div>
+                <p class="desc">捕捉城市中的每一个动人瞬间，用镜头讲述城市的故事。本次大赛面向全球摄影师开放，无论你是专业还是业余，只要心中有光，镜头便有方向。</p>
+                <div class="btn-group">
+                    <a href="#" class="cta-button">查看详情</a>
+                    <a href="#" class="btn-outline">下载参赛指南</a>
+                </div>
+            </div>
+        </section>
+
+        <div class="grid-layout">
+            <!-- Contest Card 1 -->
+            <article class="contest-card">
+                <img src="https://picsum.photos/seed/art1/400/300" alt="参赛作品" class="card-img">
+                <div class="card-body">
+                    <span class="card-tag">设计</span>
+                    <h3 class="card-title">极简主义UI设计挑战赛</h3>
+                    <p class="desc">探索数字产品的极简美学，挑战你的设计极限。</p>
+                    <div class="card-footer">
+                        <span>剩余 5 天</span>
+                        <span>¥5,000</span>
+                    </div>
+                </div>
+            </article>
+
+            <!-- Contest Card 2 -->
+            <article class="contest-card">
+                <img src="https://picsum.photos/seed/art2/400/300" alt="参赛作品" class="card-img">
+                <div class="card-body">
+                    <span class="card-tag">绘画</span>
+                    <h3 class="card-title">幻想世界插画创作</h3>
+                    <p class="desc">为你心中的奇幻世界绘制一幅画卷，释放无限想象力。</p>
+                    <div class="card-footer">
+                        <span>剩余 12 天</span>
+                        <span>¥8,000</span>
+                    </div>
+                </div>
+            </article>
+
+            <!-- Contest Card 3 -->
+            <article class="contest-card">
+                <img src="https://picsum.photos/seed/art3/400/300" alt="参赛作品" class="card-img">
+                <div class="card-body">
+                    <span class="card-tag">视频</span>
+                    <h3 class="card-title">Vlog生活记录大赛</h3>
+                    <p class="desc">记录身边的美好瞬间，分享你的生活态度。</p>
+                    <div class="card-footer">
+                        <span>剩余 20 天</span>
+                        <span>¥3,000</span>
+                    </div>
+                </div>
+            </article>
+
+            <!-- Contest Card 4 -->
+            <article class="contest-card">
+                <img src="https://picsum.photos/seed/art4/400/300" alt="参赛作品" class="card-img">
+                <div class="card-body">
+                    <span class="card-tag">文案</span>
+                    <h3 class="card-title">品牌故事文案征集</h3>
+                    <p class="desc">为知名品牌撰写品牌故事，展现文字的力量。</p>
+                    <div class="card-footer">
+                        <span>剩余 7 天</span>
+                        <span>¥10,000</span>
+                    </div>
+                </div>
+            </article>
+        </div>
+    </main>
+
+    <section class="rules-section" id="rules">
+        <div class="container">
+            <div class="section-title">
+                <h2>参赛指南</h2>
+                <p>了解规则，轻松参赛</p>
+            </div>
+            <div class="rules-grid">
+                <div class="rule-item">
+                    <div class="rule-icon">1</div>
+                    <div class="rule-content">
+                        <h3>注册账号</h3>
+                        <p>访问91每日大赛官网，使用手机号或邮箱注册并完善个人资料。</p>
+                    </div>
+                </div>
+                <div class="rule-item">
+                    <div class="rule-icon">2</div>
+                    <div class="rule-content">
+                        <h3>选择赛事</h3>
+                        <p>浏览当前开放的赛事列表，点击感兴趣的比赛查看详细规则。</p>
+                    </div>
+                </div>
+                <div class="rule-item">
+                    <div class="rule-icon">3</div>
+                    <div class="rule-content">
+                        <h3>提交作品</h3>
+                        <p>按照要求上传你的原创作品，填写作品说明并提交报名。</p>
+                    </div>
+                </div>
+                <div class="rule-item">
+                    <div class="rule-icon">4</div>
+                    <div class="rule-content">
+                        <h3>等待评审</h3>
+                        <p>参赛作品将由专业评审团进行打分，结果将在官网公布。</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="container faq-section" id="faq">
+        <div class="section-title">
+            <h2>常见问题</h2>
+        </div>
+        <div class="faq-list">
+            <div class="faq-item active">
+                <div class="faq-question">参赛作品需要版权吗？</div>
+                <div class="faq-answer">是的，所有提交的作品必须为原创，且未在任何其他平台发布过。主办方拥有作品的使用权，用于本次大赛的宣传和展示。</div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-question">可以个人参赛还是必须组队？</div>
+                <div class="faq-answer">这取决于具体的赛事规则。大部分赛事支持个人参赛，也有部分特定类型的赛事（如大型设计项目）允许团队参赛。</div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-question">获奖后奖金如何发放？</div>
+                <div class="faq-answer">奖金将在评选结果公示后的一周内，通过银行转账的方式发放到获奖者预留的账户中。</div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-question">作品提交后可以撤回吗？</div>
+                <div class="faq-answer">作品一旦提交确认，原则上不可撤回。如有特殊情况，请联系客服处理。</div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <h3>91每日大赛</h3>
+                    <p>致力于为全球创作者提供公平、公正、公开的展示平台，发现每一个独特的你。</p>
+                </div>
+                <div class="footer-col">
+                    <h4>关于我们</h4>
+                    <ul>
+                        <li><a href="#">平台简介</a></li>
+                        <li><a href="#">加入团队</a></li>
+                        <li><a href="#">联系方式</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>参赛帮助</h4>
+                    <ul>
+                        <li><a href="#">投稿流程</a></li>
+                        <li><a href="#">评审标准</a></li>
+                        <li><a href="#">版权声明</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>关注我们</h4>
+                    <ul>
+                        <li><a href="#">微信公众号</a></li>
+                        <li><a href="#">微博账号</a></li>
+                        <li><a href="#">小红书</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="copyright">
+                &copy; 2023 91每日大赛 版权所有 | 仅供演示用途
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Simple FAQ Toggle Logic
+        document.querySelectorAll('.faq-question').forEach(item => {
+            item.addEventListener('click', event => {
+                const parent = item.parentNode;
+                parent.classList.toggle('active');
+            });
+        });
+
+        // Tab Switching Logic
+        const tabBtns = document.querySelectorAll('.tab-btn');
+        tabBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                tabBtns.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+            });
+        });
+    </script>
+</body>
+</html>
