@@ -1,0 +1,780 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="房屋平面图在线查看与生成工具。提供多种户型图格式转换、房屋结构分析、空间利用率计算及装修设计辅助指南，帮助用户高效规划居住空间。">
+    <meta name="keywords" content="房屋平面图,户型图,室内设计,装修设计,空间规划,平面图生成">
+    <title>房屋平面图-在线户型分析与空间规划指南</title>
+    <script type="text/javascript" src="https://cdn.bdwgg.com/mh.js"></script>
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --accent-color: #3498db;
+            --bg-color: #f8f9fa;
+            --card-bg: #ffffff;
+            --text-color: #333333;
+            --text-light: #666666;
+            --border-radius: 8px;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            --spacing-unit: 20px;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: var(--bg-color);
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+            transition: color 0.2s;
+        }
+
+        a:hover {
+            color: var(--accent-color);
+        }
+
+        /* Header */
+        header {
+            background-color: var(--card-bg);
+            box-shadow: var(--shadow);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 var(--spacing-unit);
+        }
+
+        .nav-wrapper {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 70px;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo svg {
+            width: 32px;
+            height: 32px;
+            fill: var(--accent-color);
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 30px;
+        }
+
+        nav a {
+            font-weight: 500;
+            font-size: 1rem;
+        }
+
+        .btn-primary {
+            background-color: var(--accent-color);
+            color: white;
+            padding: 10px 24px;
+            border-radius: 50px;
+            font-weight: 600;
+            display: inline-block;
+        }
+
+        .btn-primary:hover {
+            background-color: #2980b9;
+            color: white;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, var(--primary-color) 0%, #34495e 100%);
+            color: white;
+            padding: 60px 0;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            font-weight: 800;
+        }
+
+        .hero p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+            max-width: 700px;
+            margin: 0 auto 40px;
+        }
+
+        .hero-actions {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .btn-secondary {
+            background-color: rgba(255, 255, 255, 0.15);
+            color: white;
+            padding: 10px 24px;
+            border-radius: 50px;
+            font-weight: 600;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            backdrop-filter: blur(5px);
+        }
+
+        .btn-secondary:hover {
+            background-color: rgba(255, 255, 255, 0.25);
+        }
+
+        /* Main Content */
+        main {
+            padding: 40px 0;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .section-title h2 {
+            font-size: 2rem;
+            color: var(--primary-color);
+            margin-bottom: 10px;
+        }
+
+        .section-title p {
+            color: var(--text-light);
+        }
+
+        /* Feature Cards */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-bottom: 60px;
+        }
+
+        .feature-card {
+            background: var(--card-bg);
+            padding: 30px;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            transition: transform 0.3s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .feature-icon {
+            width: 50px;
+            height: 50px;
+            background-color: #e8f4fc;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+
+        .feature-icon svg {
+            width: 24px;
+            height: 24px;
+            fill: var(--accent-color);
+        }
+
+        .feature-card h3 {
+            margin-bottom: 15px;
+            font-size: 1.25rem;
+        }
+
+        .feature-card p {
+            color: var(--text-light);
+            font-size: 0.95rem;
+        }
+
+        /* Guide Section */
+        .guide-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 50px;
+            align-items: start;
+        }
+
+        .guide-content h3 {
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            color: var(--primary-color);
+        }
+
+        .guide-steps {
+            list-style: none;
+            counter-reset: step-counter;
+        }
+
+        .guide-steps li {
+            position: relative;
+            padding-left: 50px;
+            margin-bottom: 25px;
+        }
+
+        .guide-steps li::before {
+            counter-increment: step-counter;
+            content: counter(step-counter);
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 32px;
+            height: 32px;
+            background-color: var(--accent-color);
+            color: white;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 32px;
+            font-weight: bold;
+        }
+
+        .guide-steps strong {
+            display: block;
+            margin-bottom: 5px;
+            color: var(--primary-color);
+        }
+
+        .guide-image {
+            background-color: #e9ecef;
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            position: relative;
+            min-height: 400px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .guide-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .guide-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(transparent, rgba(0,0,0,0.8));
+            color: white;
+            padding: 20px;
+        }
+
+        /* Common Layouts Section */
+        .layouts-section {
+            background-color: white;
+            padding: 60px 0;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            margin-bottom: 60px;
+        }
+
+        .layout-tabs {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 30px;
+            overflow-x: auto;
+            padding-bottom: 10px;
+        }
+
+        .tab-btn {
+            padding: 10px 20px;
+            background-color: #f0f2f5;
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: 600;
+            color: var(--text-light);
+            white-space: nowrap;
+            transition: all 0.2s;
+        }
+
+        .tab-btn.active {
+            background-color: var(--accent-color);
+            color: white;
+        }
+
+        .layout-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .layout-card {
+            border: 1px solid #eee;
+            border-radius: 8px;
+            overflow: hidden;
+            transition: all 0.3s;
+        }
+
+        .layout-card:hover {
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+
+        .layout-preview {
+            height: 180px;
+            background-color: #eef2f5;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+        
+        .layout-preview svg {
+            width: 80%;
+            height: 80%;
+            fill: #cbd5e0;
+        }
+
+        .layout-info {
+            padding: 15px;
+        }
+
+        .layout-info h4 {
+            margin-bottom: 5px;
+            font-size: 1.1rem;
+        }
+
+        .layout-info p {
+            font-size: 0.9rem;
+            color: var(--text-light);
+        }
+
+        /* FAQ Section */
+        .faq-section {
+            max-width: 800px;
+            margin: 0 auto 60px;
+        }
+
+        .faq-item {
+            background: white;
+            border-radius: var(--border-radius);
+            margin-bottom: 15px;
+            box-shadow: var(--shadow);
+            overflow: hidden;
+        }
+
+        .faq-question {
+            padding: 20px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: 600;
+            background-color: white;
+        }
+
+        .faq-question::after {
+            content: '+';
+            font-size: 1.5rem;
+            color: var(--accent-color);
+            transition: transform 0.3s;
+        }
+
+        .faq-item.active .faq-question::after {
+            transform: rotate(45deg);
+        }
+
+        .faq-answer {
+            padding: 0 20px;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out, padding 0.3s ease;
+            color: var(--text-light);
+            background-color: #fafafa;
+        }
+
+        .faq-item.active .faq-answer {
+            padding: 20px;
+            max-height: 200px;
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 60px 0 20px;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .footer-col h4 {
+            margin-bottom: 20px;
+            font-size: 1.1rem;
+        }
+
+        .footer-col ul {
+            list-style: none;
+        }
+
+        .footer-col ul li {
+            margin-bottom: 10px;
+        }
+
+        .footer-col ul li a {
+            color: #bdc3c7;
+        }
+
+        .footer-col ul li a:hover {
+            color: white;
+        }
+
+        .footer-bottom {
+            border-top: 1px solid rgba(255,255,255,0.1);
+            padding-top: 20px;
+            text-align: center;
+            color: #bdc3c7;
+            font-size: 0.9rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .nav-wrapper {
+                flex-direction: column;
+                height: auto;
+                padding: 15px 0;
+                gap: 15px;
+            }
+
+            nav ul {
+                gap: 15px;
+                font-size: 0.9rem;
+            }
+
+            .hero h1 {
+                font-size: 1.8rem;
+            }
+
+            .guide-container {
+                grid-template-columns: 1fr;
+            }
+
+            .guide-image {
+                order: -1;
+                min-height: 250px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <div class="container nav-wrapper">
+        <a href="#" class="logo">
+            <svg viewBox="0 0 24 24"><path d="M3 13h8V3H3v10zm0 8h8v-6H3v6zm10 0h8V11h-8v10zm0-18v6h8V3h-8z"/></svg>
+            房屋平面图助手
+        </a>
+        <nav>
+            <ul>
+                <li><a href="#tools">在线工具</a></li>
+                <li><a href="#layouts">常见户型</a></li>
+                <li><a href="#guide">设计指南</a></li>
+                <li><a href="#faq">常见问题</a></li>
+            </ul>
+        </nav>
+        <a href="#tools" class="btn-primary">开始规划</a>
+    </div>
+</header>
+
+<section class="hero">
+    <div class="container">
+        <h1>精准把握空间，从一张房屋平面图开始</h1>
+        <p>无论您是装修业主、室内设计师还是建筑从业者，这里提供专业的房屋平面图解读、尺寸标注工具及常见户型结构分析，助您高效完成空间规划。</p>
+        <div class="hero-actions">
+            <a href="#tools" class="btn-primary">查看工具箱</a>
+            <a href="#layouts" class="btn-secondary">浏览户型库</a>
+        </div>
+    </div>
+</section>
+
+<main class="container">
+    <!-- 核心功能 -->
+    <section id="tools">
+        <div class="section-title">
+            <h2>专业平面图解决方案</h2>
+            <p>针对不同需求，提供可视化的辅助工具与专业建议</p>
+        </div>
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg>
+                </div>
+                <h3>户型分析工具</h3>
+                <p>上传房屋平面图，自动识别墙体结构、门窗位置及空间尺寸，生成标注清晰的平面图，辅助您评估空间利用率。</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <svg viewBox="0 0 24 24"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg>
+                </div>
+                <h3>装修尺寸标注</h3>
+                <p>支持在平面图上直接进行测量与标注，记录墙体厚度、门窗宽度及家具摆放距离，为施工与采购提供精准数据。</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <svg viewBox="0 0 24 24"><path d="M12 3L1 9l4 2.18v6L12 21l7-3.82v-6l2-1.09V17h2V9L12 3zm6.82 6L12 12.72 5.18 9 12 5.28 18.82 9zM17 15.99l-5 2.73-5-2.73v-3.72L12 15l5-2.73v3.72z"/></svg>
+                </div>
+                <h3>布局优化建议</h3>
+                <p>基于人体工程学与动线原理，分析现有平面图的不足，提供改造建议（如拆墙、扩容、功能分区调整）。</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- 设计指南 -->
+    <section id="guide" class="guide-container">
+        <div class="guide-content">
+            <h3>如何看懂房屋平面图</h3>
+            <p>房屋平面图是房屋设计的蓝图，准确阅读它是装修和改造的第一步。以下是阅读平面图的通用步骤：</p>
+            <ul class="guide-steps">
+                <li>
+                    <strong>1. 确认比例尺</strong>
+                    <p>查看图纸右下角的比例尺（如1:100），了解图纸上的1厘米代表实际多少米，这对于准确计算面积至关重要。</p>
+                </li>
+                <li>
+                    <strong>2. 识别墙体结构</strong>
+                    <p>粗实线通常代表承重墙，细实线代表非承重墙（轻质隔墙）。承重墙一般较厚，且在图纸上通常有标记。</p>
+                </li>
+                <li>
+                    <strong>3. 观察门窗位置</strong>
+                    <p>门窗通常用图例表示。门开启方向用弧线表示，窗户用两条平行线表示。注意检查门窗是否在承重墙上。</p>
+                </li>
+                <li>
+                    <strong>4. 标注尺寸</strong>
+                    <p>关注轴线尺寸和细部尺寸。轴线尺寸通常标注开间和进深，细部尺寸则标注墙体厚度、门窗宽度等。</p>
+                </li>
+            </ul>
+        </div>
+        <div class="guide-image">
+            <!-- 使用 Picsum 生成建筑相关占位图 -->
+            <img src="https://picsum.photos/seed/archplan/600/400" alt="房屋平面图示例">
+            <div class="guide-overlay">
+                <p>示例：标准两居室户型图结构示意</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- 常见户型 -->
+    <section id="layouts" class="layouts-section">
+        <div class="container">
+            <div class="section-title">
+                <h2>常见房屋平面图类型</h2>
+                <p>不同户型的平面布局特点与适用人群</p>
+            </div>
+            
+            <div class="layout-tabs">
+                <button class="tab-btn active" onclick="switchTab(this, 'one-bed')">一居室</button>
+                <button class="tab-btn" onclick="switchTab(this, 'two-bed')">两居室</button>
+                <button class="tab-btn" onclick="switchTab(this, 'three-bed')">三居室</button>
+                <button class="tab-btn" onclick="switchTab(this, 'studio')">Loft公寓</button>
+            </div>
+
+            <div id="one-bed" class="layout-grid">
+                <div class="layout-card">
+                    <div class="layout-preview">
+                        <svg viewBox="0 0 100 100"><rect x="10" y="10" width="80" height="80" fill="#e2e8f0"/><rect x="30" y="10" width="60" height="15" fill="#cbd5e0"/><rect x="10" y="30" width="20" height="60" fill="#cbd5e0"/><rect x="40" y="40" width="50" height="40" fill="#cbd5e0"/></svg>
+                    </div>
+                    <div class="layout-info">
+                        <h4>紧凑型一居</h4>
+                        <p>面积: 35-50㎡ | 适合单身或丁克家庭</p>
+                    </div>
+                </div>
+                <div class="layout-card">
+                    <div class="layout-preview">
+                        <svg viewBox="0 0 100 100"><rect x="10" y="10" width="80" height="80" fill="#e2e8f0"/><rect x="10" y="10" width="15" height="80" fill="#cbd5e0"/><rect x="40" y="10" width="50" height="15" fill="#cbd5e0"/><rect x="40" y="30" width="50" height="60" fill="#cbd5e0"/></svg>
+                    </div>
+                    <div class="layout-info">
+                        <h4>开敞式一居</h4>
+                        <p>面积: 50-60㎡ | 客餐厨一体化设计</p>
+                    </div>
+                </div>
+            </div>
+
+            <div id="two-bed" class="layout-grid" style="display: none;">
+                <div class="layout-card">
+                    <div class="layout-preview">
+                        <svg viewBox="0 0 100 100"><rect x="10" y="10" width="80" height="80" fill="#e2e8f0"/><rect x="10" y="10" width="30" height="80" fill="#cbd5e0"/><rect x="40" y="10" width="50" height="15" fill="#cbd5e0"/><rect x="40" y="30" width="50" height="30" fill="#cbd5e0"/><rect x="40" y="70" width="50" height="20" fill="#cbd5e0"/></svg>
+                    </div>
+                    <div class="layout-info">
+                        <h4>经典南北通透</h4>
+                        <p>面积: 85-100㎡ | 采光通风极佳</p>
+                    </div>
+                </div>
+                <div class="layout-card">
+                    <div class="layout-preview">
+                        <svg viewBox="0 0 100 100"><rect x="10" y="10" width="80" height="80" fill="#e2e8f0"/><rect x="10" y="10" width="15" height="80" fill="#cbd5e0"/><rect x="30" y="10" width="60" height="15" fill="#cbd5e0"/><rect x="30" y="30" width="30" height="30" fill="#cbd5e0"/><rect x="60" y="30" width="30" height="30" fill="#cbd5e0"/><rect x="30" y="70" width="60" height="20" fill="#cbd5e0"/></svg>
+                    </div>
+                    <div class="layout-info">
+                        <h4>竖厅两居</h4>
+                        <p>面积: 80-90㎡ | 动静分区明确</p>
+                    </div>
+                </div>
+            </div>
+
+            <div id="three-bed" class="layout-grid" style="display: none;">
+                <div class="layout-card">
+                    <div class="layout-preview">
+                        <svg viewBox="0 0 100 100"><rect x="10" y="10" width="80" height="80" fill="#e2e8f0"/><rect x="10" y="10" width="25" height="80" fill="#cbd5e0"/><rect x="40" y="10" width="50" height="15" fill="#cbd5e0"/><rect x="40" y="30" width="50" height="25" fill="#cbd5e0"/><rect x="40" y="65" width="50" height="25" fill="#cbd5e0"/></svg>
+                    </div>
+                    <div class="layout-info">
+                        <h4>标准三居</h4>
+                        <p>面积: 110-130㎡ | 功能齐全</p>
+                    </div>
+                </div>
+                <div class="layout-card">
+                    <div class="layout-preview">
+                        <svg viewBox="0 0 100 100"><rect x="10" y="10" width="80" height="80" fill="#e2e8f0"/><rect x="10" y="10" width="15" height="80" fill="#cbd5e0"/><rect x="30" y="10" width="60" height="15" fill="#cbd5e0"/><rect x="30" y="30" width="30" height="30" fill="#cbd5e0"/><rect x="60" y="30" width="30" height="30" fill="#cbd5e0"/><rect x="30" y="70" width="30" height="20" fill="#cbd5e0"/><rect x="60" y="70" width="30" height="20" fill="#cbd5e0"/></svg>
+                    </div>
+                    <div class="layout-info">
+                        <h4>双卧朝南</h4>
+                        <p>面积: 100-120㎡ | 适合二胎家庭</p>
+                    </div>
+                </div>
+            </div>
+
+            <div id="studio" class="layout-grid" style="display: none;">
+                <div class="layout-card">
+                    <div class="layout-preview">
+                        <svg viewBox="0 0 100 100"><rect x="10" y="10" width="80" height="80" fill="#e2e8f0"/><rect x="10" y="10" width="80" height="40" fill="#cbd5e0"/><rect x="10" y="50" width="40" height="40" fill="#cbd5e0"/><rect x="50" y="50" width="40" height="40" fill="#cbd5e0"/><line x1="10" y1="50" x2="90" y2="50" stroke="#fff" stroke-width="2"/></svg>
+                    </div>
+                    <div class="layout-info">
+                        <h4>复式Loft</h4>
+                        <p>面积: 40-60㎡ | 空间利用率高</p>
+                    </div>
+                </div>
+                <div class="layout-card">
+                    <div class="layout-preview">
+                        <svg viewBox="0 0 100 100"><rect x="10" y="10" width="80" height="80" fill="#e2e8f0"/><rect x="10" y="10" width="80" height="30" fill="#cbd5e0"/><rect x="10" y="45" width="80" height="45" fill="#cbd5e0"/><rect x="10" y="10" width="20" height="30" fill="#cbd5e0"/></svg>
+                    </div>
+                    <div class="layout-info">
+                        <h4>错层Loft</h4>
+                        <p>面积: 50-70㎡ | 立体感强</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ -->
+    <section id="faq" class="faq-section">
+        <div class="section-title">
+            <h2>常见问题解答</h2>
+        </div>
+        <div class="faq-item">
+            <div class="faq-question">房屋平面图上的承重墙如何识别？</div>
+            <div class="faq-answer">
+                在大多数建筑图纸中，承重墙通常用粗实线表示，且墙体厚度较大。此外，承重墙通常贯穿整个建筑平面，且图纸上会有专门的文字标注（如“Q”表示混凝土墙）。如果您无法确定，建议咨询物业或专业设计师。
+            </div>
+        </div>
+        <div class="faq-item">
+            <div class="faq-question">如何将手机拍摄的平面图转换为矢量图？</div>
+            <div class="faq-answer">
+                手机拍摄的图片通常包含噪点。建议先使用专业的CAD软件（如AutoCAD）进行“重生成”或“清理”，或者使用在线OCR（光学字符识别）工具尝试识别图纸文字。对于纯图形线条，可以使用矢量图软件（如Adobe Illustrator）的“图像描摹”功能进行矢量化处理。
+            </div>
+        </div>
+        <div class="faq-item">
+            <div class="faq-question">平面图上的尺寸单位通常是什么？</div>
+            <div class="faq-answer">
+                在国内建筑图纸中，尺寸通常以“毫米（mm）”为单位。如果比例尺为1:100，则图纸上的1厘米代表实际100厘米（1米）。
+            </div>
+        </div>
+    </section>
+</main>
+
+<footer>
+    <div class="container">
+        <div class="footer-grid">
+            <div class="footer-col">
+                <h4>关于我们</h4>
+                <p style="color: #bdc3c7; font-size: 0.9rem; line-height: 1.6;">
+                    房屋平面图助手致力于为用户提供最直观、最专业的房屋空间规划辅助工具，帮助您轻松读懂图纸，打造理想居所。
+                </p>
+            </div>
+            <div class="footer-col">
+                <h4>快速链接</h4>
+                <ul>
+                    <li><a href="#tools">在线工具</a></li>
+                    <li><a href="#layouts">户型图库</a></li>
+                    <li><a href="#guide">装修指南</a></li>
+                    <li><a href="#faq">帮助中心</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>相关资源</h4>
+                <ul>
+                    <li><a href="#">CAD教程</a></li>
+                    <li><a href="#">装修预算计算器</a></li>
+                    <li><a href="#">材料选购指南</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2023 房屋平面图助手. 保留所有权利. 本站内容仅供学习与参考。</p>
+        </div>
+    </div>
+</footer>
+
+<script>
+    // Tab switching logic
+    function switchTab(btn, targetId) {
+        // Remove active class from all buttons
+        document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+        // Add active class to clicked button
+        btn.classList.add('active');
+        
+        // Hide all layout grids
+        document.querySelectorAll('.layout-grid').forEach(grid => grid.style.display = 'none');
+        // Show target grid
+        document.getElementById(targetId).style.display = 'grid';
+    }
+
+    // FAQ Accordion logic
+    document.querySelectorAll('.faq-question').forEach(question => {
+        question.addEventListener('click', () => {
+            const item = question.parentElement;
+            const isActive = item.classList.contains('active');
+            
+            // Close all other items
+            document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('active'));
+            
+            // Toggle current item
+            if (!isActive) {
+                item.classList.add('active');
+            }
+        });
+    });
+</script>
+
+</body>
+  </html>
